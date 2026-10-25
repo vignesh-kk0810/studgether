@@ -1,0 +1,12 @@
+{
+  "name": "Studgether",
+  "short_name": "Studgether",
+  "description": "A shared study timer for small study groups. Everyone sees the same clock.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#172554",
+  "icons": [
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

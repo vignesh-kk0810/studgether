@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172554">
+  <meta name="description" content="A shared study timer for small study groups.">
+  <title>Studgether · shared study timer</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Studgether home"><span class="brand-mark">S</span><span>Studgether</span></a>
+    <span class="connection" id="connectionStatus"><span class="dot"></span> Not connected</span>
+  </header>
+
+  <main class="shell">
+    <section class="intro" id="introPanel">
+      <p class="eyebrow">FOCUS, TOGETHER</p>
+      <h1>Study together, on one shared clock.</h1>
+      <p class="intro-copy">Create a room, share the code, and start together. No sign-up needed. Your break is personal; the shared clock keeps moving.</p>
+    </section>
+
+    <section class="notice hidden" id="configNotice">
+      <strong id="noticeTitle">Notice</strong>
+      <p id="noticeText"></p>
+    </section>
+
+    <section class="setup-grid" id="entryPanel">
+      <article class="panel">
+        <div class="panel-icon">✦</div>
+        <h2>Host a room</h2>
+        <p>Create a room and control the shared study session.</p>
+        <label for="hostName">Your display name</label>
+        <input id="hostName" maxlength="24" placeholder="e.g. Vignesh" autocomplete="nickname">
+        <label for="duration">Session duration</label>
+        <select id="duration">
+          <option value="25">25 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="50">50 minutes</option>
+          <option value="60" selected>1 hour</option>
+          <option value="90">1 hour 30 minutes</option>
+          <option value="120">2 hours</option>
+          <option value="custom">Custom duration</option>
+        </select>
+        <div id="customDurationWrap" class="hidden">
+          <label for="customDuration">Minutes (1–600)</label>
+          <input id="customDuration" type="number" min="1" max="600" value="90">
+        </div>
+        <button id="createRoomBtn" class="primary full">Create room</button>
+      </article>
+
+      <article class="panel">
+        <div class="panel-icon">↗</div>
+        <h2>Join a room</h2>
+        <p>Enter the room code shared by your host.</p>
+        <label for="joinName">Your display name</label>
+        <input id="joinName" maxlength="24" placeholder="e.g. Priya" autocomplete="nickname">
+        <label for="roomCode">Room code</label>
+        <input id="roomCode" maxlength="6" placeholder="ABC123" autocapitalize="characters" spellcheck="false">
+        <button id="joinRoomBtn" class="secondary full">Join room</button>
+      </article>
+    </section>
+
+    <section class="room hidden" id="roomPanel">
+      <div class="room-heading">
+        <div>
+          <p class="eyebrow">YOUR STUDY ROOM</p>
+          <h2 id="roomTitle">Room</h2>
+          <p class="subtle" id="roomMeta">Waiting for session</p>
+        </div>
+        <div class="room-actions">
+          <button id="shareBtn" class="small secondary">Copy invite</button>
+          <button id="leaveBtn" class="small ghost">Leave room</button>
+        </div>
+      </div>
+
+      <article class="timer-card">
+        <div class="timer-topline"><span id="sessionStatus" class="status-pill">Not started</span><span id="hostLabel">Host controls session</span></div>
+        <div class="timer" id="timerDisplay" role="timer" aria-live="off">01:00:00</div>
+        <p id="timerCaption" class="timer-caption">The shared session has not started yet.</p>
+        <div id="hostControls" class="controls hidden">
+          <button id="startBtn" class="primary">Start shared timer</button>
+          <button id="restartBtn" class="secondary">Restart duration</button>
+          <button id="endBtn" class="danger">End session</button>
+        </div>
+        <p id="nonHostHint" class="subtle hidden">The host controls the shared clock. You can update your own status below.</p>
+      </article>
+
+      <div class="room-columns">
+        <article class="panel status-panel">
+          <div class="section-heading"><div><h3>Your status</h3><p class="subtle">This never pauses the shared clock.</p></div></div>
+          <div class="status-buttons">
+            <button class="status-choice active" data-status="studying"><span>📚</span> Studying</button>
+            <button class="status-choice" data-status="break"><span>☕</span> On a break</button>
+            <button class="status-choice" data-status="away"><span>🚶</span> Away</button>
+          </div>
+        </article>
+        <article class="panel participants-panel">
+          <div class="section-heading"><div><h3>Participants</h3><p class="subtle"><span id="participantCount">0</span> in this room</p></div></div>
+          <ul id="participantList" class="participant-list"><li class="empty">Participants will appear here.</li></ul>
+        </article>
+      </div>
+      <p class="privacy-note">No accounts, no sign-up, no database. Friends connect directly to each other (peer-to-peer), so room details exist only while people are in the room. Anyone with the room code can join. If the host leaves, the next person automatically becomes host.</p>
+    </section>
+
+    <div id="message" class="message" role="status" aria-live="polite"></div>
+    <footer><span>Studgether · Free study rooms, no sign-up</span><span>Built for focus, not pressure.</span></footer>
+  </main>
+  <script src="config.js"></script>
+  <script src="vendor/net.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
